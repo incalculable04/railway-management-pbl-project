@@ -322,17 +322,18 @@ isDisabled = (choice == 1);
     }
 
     void searchBooking() const {
-        int pnr;
-        cout << "\nEnter PNR to search: ";
-        cin >> pnr;
+        Passenger* search(int pnr) const {
+    Passenger* temp = frontNode;
 
-        Passenger* p = confirmedList.search(pnr);
-        if (p) {
-            cout << "\n--- Confirmed Booking Found ---\n";
-            cout << *p; // Using overloaded << operator
-        } else {
-            cout << "Booking not found in confirmed list.\n";
+    while (temp) {
+        if (temp->pnr == pnr) {
+            return temp;
         }
+        temp = temp->next;
+    }
+
+    return nullptr;
+}
     }
 
     void displayWaitingList() const {
