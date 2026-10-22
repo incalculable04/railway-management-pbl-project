@@ -235,16 +235,41 @@ public:
         bool isDisabled = false;
 
         cout << "\n--- BOOK TICKET ---\n";
-        cout << "Enter Passenger Name: ";
-        cin.ignore();
-        getline(cin, name);
-        cout << "Enter Age: ";
-        cin >> age;
-        cout << "Enter Train Number: ";
-        cin >> trainNo;
-        cout << "Is passenger disabled? (1 for Yes, 0 for No): ";
-        cin >> choice;
-        isDisabled = (choice == 1);
+
+cout << "Enter Passenger Name: ";
+cin.ignore(10000, '\n');
+getline(cin, name);
+
+if (name.empty()) {
+    cout << "Name cannot be empty.\n";
+    return;
+}
+
+cout << "Enter Age: ";
+if (!(cin >> age) || age < 0 || age > 120) {
+    cout << "Invalid age. Enter an age between 0 and 120.\n";
+    cin.clear();
+    cin.ignore(10000, '\n');
+    return;
+}
+
+cout << "Enter Train Number: ";
+if (!(cin >> trainNo) || trainNo <= 0) {
+    cout << "Invalid train number.\n";
+    cin.clear();
+    cin.ignore(10000, '\n');
+    return;
+}
+
+cout << "Is passenger disabled? (1 for Yes, 0 for No): ";
+if (!(cin >> choice) || (choice != 0 && choice != 1)) {
+    cout << "Enter only 1 for Yes or 0 for No.\n";
+    cin.clear();
+    cin.ignore(10000, '\n');
+    return;
+}
+
+isDisabled = (choice == 1);
 
         if (currentConfirmedCount < maxConfirmedSeats) {
             Passenger* newPassenger = new Passenger(name, age, nextPNR, nextSeat, trainNo, isDisabled);
